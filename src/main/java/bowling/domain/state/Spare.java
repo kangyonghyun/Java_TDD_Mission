@@ -4,17 +4,16 @@ import java.util.Objects;
 
 public class Spare extends Finished {
 
+    public static final String ERROR_NOT_SPARE_MSG = "스페어가 아닙니다!";
     private final Pins firstPins;
     private final Pins secondPins;
 
     public Spare(Pins firstPins, Pins secondPins) {
+        if (!firstPins.isSpare(secondPins)) {
+            throw new IllegalArgumentException(ERROR_NOT_SPARE_MSG);
+        }
         this.firstPins = firstPins;
         this.secondPins = secondPins;
-    }
-
-    @Override
-    public State bowl(int downOfPins) {
-        return null;
     }
 
     @Override

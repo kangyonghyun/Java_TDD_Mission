@@ -4,15 +4,13 @@ import java.util.Objects;
 
 public class Pins {
 
-    public static final int STRIKE_COUNT = 10;
-    public static final int SPARE_COUNT = 10;
+    public static final int MAX_PINS = 10;
+    public static final String ERROR_RANGE_OF_PINS_MSG = "볼링핀의 개수는 0~10 까지 입니다.";
 
     private final int downOfPins;
 
     public Pins(int downOfPins) {
-        if (downOfPins > 10 || downOfPins < 0) {
-            throw new IllegalArgumentException("볼링핀의 개수는 0~10 까지 입니다.");
-        }
+        checkDownOfPins(downOfPins);
         this.downOfPins = downOfPins;
     }
 
@@ -21,15 +19,23 @@ public class Pins {
     }
 
     public boolean isStrike() {
-        return this.downOfPins == STRIKE_COUNT;
+        return this.downOfPins == MAX_PINS;
     }
 
     public boolean isSpare(Pins secondPins) {
-        return totalPins(secondPins) == SPARE_COUNT;
+        return totalPins(secondPins) == MAX_PINS;
     }
 
-    private int totalPins(Pins secondPins) {
-        return this.downOfPins + secondPins.downOfPins;
+    public int totalPins(Pins secondPins) {
+        int total = this.downOfPins + secondPins.downOfPins;
+        checkDownOfPins(total);
+        return total;
+    }
+
+    private void checkDownOfPins(int downOfPins) {
+        if (downOfPins > 10 || downOfPins < 0) {
+            throw new IllegalArgumentException(ERROR_RANGE_OF_PINS_MSG);
+        }
     }
 
     @Override

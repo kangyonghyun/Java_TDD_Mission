@@ -8,13 +8,11 @@ public class Miss extends Finished {
     private final Pins secondPins;
 
     public Miss(Pins firstPins, Pins secondPins) {
+        if (firstPins.totalPins(secondPins) > Pins.MAX_PINS) {
+            throw new IllegalArgumentException(Pins.ERROR_RANGE_OF_PINS_MSG);
+        }
         this.firstPins = firstPins;
         this.secondPins = secondPins;
-    }
-
-    @Override
-    public State bowl(int downOfPins) {
-        return null;
     }
 
     @Override

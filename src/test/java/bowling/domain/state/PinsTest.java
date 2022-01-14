@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -23,6 +24,18 @@ class PinsTest {
     }
 
     @Test
+    @DisplayName("정적 팩토리 메서드 생성")
+    void of() {
+        assertThat(Pins.of(10)).isEqualTo(new Pins(10));
+    }
+
+    @Test
+    void invalid_of() {
+        assertThatThrownBy(() -> Pins.of(11))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void isStrike() {
         Pins pins = new Pins(10);
         assertThat(pins.isStrike()).isTrue();
@@ -36,13 +49,17 @@ class PinsTest {
     }
 
     @Test
-    void of() {
-        assertThat(Pins.of(10)).isEqualTo(new Pins(10));
+    void valid_totalPins() {
+        Pins first = Pins.of(8);
+        Pins second = Pins.of(2);
+        assertThat(first.totalPins(second)).isEqualTo(10);
     }
 
     @Test
-    void invalid_of() {
-        assertThatThrownBy(() -> Pins.of(11))
+    void invalid_totalPins() {
+        Pins first = Pins.of(8);
+        Pins second = Pins.of(3);
+        assertThatThrownBy(() -> first.totalPins(second))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
