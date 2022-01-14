@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 
@@ -13,8 +12,7 @@ public class NormalFrame implements Frame {
     private Frame next;
 
     public NormalFrame(int no) {
-        this.no = no;
-        this.state = StateFactory.ready();
+        this(no, StateFactory.ready());
     }
 
     public NormalFrame(int no, State state) {

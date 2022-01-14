@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.State;
-import bowling.domain.state.StateFactory;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +30,30 @@ class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("첫 투구가 스트라이크 아닐 경우 -> FirstBowl -> Miss")
+    void bowl_8_1_this_frame() {
+        NormalFrame normalFrame = new NormalFrame(1, StateFactory.ready());
+
+        //MISS
+        normalFrame.bowl(8).bowl(1);
+
+        assertThat(normalFrame.getNo()).isEqualTo(1);
+        assertThat(normalFrame.getState()).isEqualTo(new Miss(new Pins(8), new Pins(1)));
+    }
+
+    @Test
+    @DisplayName("첫 투구가 스트라이크 아닐 경우 -> FirstBowl -> Spare")
+    void bowl_8_2_this_frame() {
+        NormalFrame normalFrame = new NormalFrame(1, StateFactory.ready());
+
+        //SPARE
+        normalFrame.bowl(8).bowl(2);
+
+        assertThat(normalFrame.getNo()).isEqualTo(1);
+        assertThat(normalFrame.getState()).isEqualTo(new Spare(new Pins(8), new Pins(2)));
+    }
+
+    @Test
     @DisplayName("첫 투구가 스트라이크일 경우 -> no+1, Strike 상태 객체 반환")
     void bowl_strike_next_frame() {
         State ready = StateFactory.ready();
@@ -41,7 +63,7 @@ class NormalFrameTest {
         Frame frame = normalFrame.bowl(10);
 
         assertThat(normalFrame.getNo()).isEqualTo(1);
-        assertThat(normalFrame.getState()).isEqualTo(new Strike(10));
+        assertThat(normalFrame.getState()).isEqualTo(new Strike(new Pins(10)));
         assertThat(frame.getNo()).isEqualTo(2);
         assertThat(frame.getState()).isEqualTo(ready);
     }
