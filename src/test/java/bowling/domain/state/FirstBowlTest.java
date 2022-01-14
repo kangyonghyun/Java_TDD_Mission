@@ -1,29 +1,35 @@
 package bowling.domain.state;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstBowlTest {
 
+    private State firstBowl;
+
+    @BeforeEach
+    void setUp() {
+        firstBowl = StateFactory.firstBowl(8);
+    }
+
     @Test
     void create() {
-        State firstBowl = new FirstBowl(new Pins(8));
-        assertThat(firstBowl).isEqualTo(new FirstBowl(new Pins(8)));
+        assertThat(firstBowl).isEqualTo(new FirstBowl(Pins.of(8)));
     }
 
     @Test
+    @DisplayName("FirstBowl -> Miss")
     void miss() {
-        State firstBowl = new FirstBowl(new Pins(8));
-        State result = firstBowl.bowl(1);
-        assertThat(result).isEqualTo(new Miss(new Pins(8), new Pins(1)));
+        assertThat(firstBowl.bowl(1)).isEqualTo(new Miss(Pins.of(8), Pins.of(1)));
     }
 
     @Test
+    @DisplayName("FirstBowl -> Spare")
     void spare() {
-        State firstBowl = new FirstBowl(new Pins(8));
-        State result = firstBowl.bowl(2);
-        assertThat(result).isEqualTo(new Spare(new Pins(8), new Pins(2)));
+        assertThat(firstBowl.bowl(2)).isEqualTo(new Spare(Pins.of(8), Pins.of(2)));
     }
 
 }
