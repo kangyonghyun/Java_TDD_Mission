@@ -1,18 +1,14 @@
 package bowling.domain.state;
 
-public class Ready implements State {
+public class Ready extends Running {
 
     @Override
     public State bowl(int firstPins) {
-        if (firstPins == 10) {
-            return new Strike(firstPins);
+        Pins downOfPins = new Pins(firstPins);
+        if (downOfPins.isStrike()) {
+            return new Strike(downOfPins);
         }
-        return new FirstBowl(firstPins);
-    }
-
-    @Override
-    public boolean isFinal() {
-        return false;
+        return new FirstBowl(downOfPins);
     }
 
 }

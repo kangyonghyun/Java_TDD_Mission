@@ -18,7 +18,7 @@ class ReadyTest {
     @DisplayName("Ready 상태 -> Strike 상태")
     void bowl_strike() {
         State ready = new Ready();
-        assertThat(ready.bowl(10)).isEqualTo(new Strike(10));
+        assertThat(ready.bowl(10)).isEqualTo(new Strike(new Pins(10)));
     }
 
 }

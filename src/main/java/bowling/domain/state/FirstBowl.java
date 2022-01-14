@@ -2,22 +2,21 @@ package bowling.domain.state;
 
 import java.util.Objects;
 
-public class FirstBowl implements State {
+public class FirstBowl extends Running {
 
-    private final int firstPins;
+    private final Pins firstPins;
 
-    public FirstBowl(int downOfPins) {
+    public FirstBowl(Pins downOfPins) {
         this.firstPins = downOfPins;
     }
 
     @Override
     public State bowl(int downOfPins) {
-        return null;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return false;
+        Pins secondPins = new Pins(downOfPins);
+        if (this.firstPins.isSpare(secondPins)) {
+            return new Spare(this.firstPins, secondPins);
+        }
+        return new Miss(this.firstPins, secondPins);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class FirstBowl implements State {
             return false;
         }
         FirstBowl firstBowl = (FirstBowl) o;
-        return firstPins == firstBowl.firstPins;
+        return Objects.equals(firstPins, firstBowl.firstPins);
     }
 
     @Override
