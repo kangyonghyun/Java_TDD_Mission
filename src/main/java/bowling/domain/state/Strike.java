@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Strike implements State {
 
-    private final int downOfPins;
+    private final Pins pins;
 
-    public Strike(int firstPins) {
-        this.downOfPins = firstPins;
+    public Strike(Pins firstPins) {
+        this.pins = firstPins;
     }
 
     @Override
@@ -22,18 +22,14 @@ public class Strike implements State {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Strike strike = (Strike) o;
-        return downOfPins == strike.downOfPins;
+        return Objects.equals(pins, strike.pins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(downOfPins);
+        return Objects.hash(pins);
     }
 }

@@ -8,8 +8,8 @@ class StrikeTest {
 
     @Test
     void create() {
-        State strike = new Strike(10);
-        assertThat(strike).isEqualTo(new Strike(10));
+        State strike = new Strike(new Pins(10));
+        assertThat(strike).isEqualTo(new Strike(new Pins(10)));
     }
 
 }
