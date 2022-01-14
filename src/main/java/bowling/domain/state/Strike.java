@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import java.util.Objects;
 
-public class Strike implements State {
+public class Strike extends Finished {
 
     private final Pins pins;
 
@@ -16,14 +16,13 @@ public class Strike implements State {
     }
 
     @Override
-    public boolean isFinal() {
-        return true;
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Strike strike = (Strike) o;
         return Objects.equals(pins, strike.pins);
     }

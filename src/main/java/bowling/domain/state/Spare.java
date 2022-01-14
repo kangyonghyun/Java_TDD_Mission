@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import java.util.Objects;
 
-public class Spare implements State {
+public class Spare extends Finished {
 
     private final Pins firstPins;
     private final Pins secondPins;
@@ -15,11 +15,6 @@ public class Spare implements State {
     @Override
     public State bowl(int downOfPins) {
         return null;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return false;
     }
 
     @Override

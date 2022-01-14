@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import java.util.Objects;
 
-public class Miss implements State {
+public class Miss extends Finished {
 
     private final Pins firstPins;
     private final Pins secondPins;
@@ -15,11 +15,6 @@ public class Miss implements State {
     @Override
     public State bowl(int downOfPins) {
         return null;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return true;
     }
 
     @Override
