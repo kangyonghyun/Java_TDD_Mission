@@ -6,7 +6,7 @@ public class Ready extends Running {
     public State bowl(int firstPins) {
         Pins downOfPins = new Pins(firstPins);
         if (downOfPins.isStrike()) {
-            return new Strike(downOfPins);
+            return new Strike();
         }
         return new FirstBowl(downOfPins);
     }
