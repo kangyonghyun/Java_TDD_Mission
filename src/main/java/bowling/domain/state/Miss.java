@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Miss extends Finished {
@@ -13,6 +15,20 @@ public class Miss extends Finished {
         }
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.miss(this.firstPins.totalPins(secondPins));
+    }
+
+    @Override
+    public Score calculateExtraScore(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        return this.secondPins.sumScore(beforeScore);
     }
 
     @Override

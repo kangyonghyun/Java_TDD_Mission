@@ -1,10 +1,13 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Spare extends Finished {
 
     public static final String ERROR_NOT_SPARE_MSG = "스페어가 아닙니다!";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -15,6 +18,22 @@ public class Spare extends Finished {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
+
+    @Override
+    public Score getScore() {
+        return Score.spare();
+    }
+
+    @Override
+    public Score calculateExtraScore(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        beforeScore = this.secondPins.sumScore(beforeScore);
+        return beforeScore;
+    }
+
 
     @Override
     public boolean equals(Object o) {

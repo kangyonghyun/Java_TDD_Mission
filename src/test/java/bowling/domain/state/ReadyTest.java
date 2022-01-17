@@ -1,10 +1,13 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+import bowling.domain.exception.CannotCalculateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ReadyTest {
 
@@ -24,8 +27,14 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태 -> Strike 상태")
     void bowl_strike() {
-        State ready = new Ready();
         assertThat(ready.bowl(10)).isExactlyInstanceOf(Strike.class);
+    }
+
+    @Test
+    @DisplayName("Ready 상태에선 calculateExtraScore 호출 -> CannotCalculateException 반환")
+    void calculateExtraScore() {
+        assertThatThrownBy(() -> ready.calculateExtraScore(Score.spare()))
+                .isInstanceOf(CannotCalculateException.class);
     }
 
 }

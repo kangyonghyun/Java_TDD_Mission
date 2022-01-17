@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Pins {
@@ -36,6 +38,10 @@ public class Pins {
         if (downOfPins > 10 || downOfPins < 0) {
             throw new IllegalArgumentException(ERROR_RANGE_OF_PINS_MSG);
         }
+    }
+
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(this.downOfPins);
     }
 
     @Override
