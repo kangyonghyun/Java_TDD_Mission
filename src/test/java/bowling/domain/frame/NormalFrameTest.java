@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,10 +64,79 @@ class NormalFrameTest {
         Frame frame = normalFrame.bowl(10);
 
         assertThat(normalFrame.getNo()).isEqualTo(1);
-        assertThat(normalFrame.getState()).isEqualTo(new Strike(new Pins(10)));
+        assertThat(normalFrame.getState()).isExactlyInstanceOf(Strike.class);
         assertThat(frame.getNo()).isEqualTo(2);
         assertThat(frame.getState()).isEqualTo(ready);
     }
 
+    @Test
+    @DisplayName("현재상태(spare) : before - strike")
+    void strike_calculateExtraScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(8).bowl(2);
+        assertThat(now.calculateExtraScore(Score.strike())).isEqualTo(new Score(20, 0));
+    }
+
+    @Test
+    @DisplayName("현재상태(spare) : before - spare")
+    void spare_calculateExtraScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(8).bowl(2); // 현재상태 (spare)
+        assertThat(now.calculateExtraScore(Score.spare())).isEqualTo(new Score(18, 0));
+    }
+
+    // 현재상태(strike, miss)
+    @Test
+    @DisplayName("현재상태(strike) : before - spare")
+    void spare_strike_calculateExtraScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(10);
+        assertThat(now.calculateExtraScore(Score.spare())).isEqualTo(new Score(20, 0));
+    }
+
+    @Test
+    @DisplayName("현재상태(strike) : before - strike")
+    void strike_strike_calculateExtraScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(10)
+        .bowl(10);
+        assertThat(now.calculateExtraScore(Score.strike())).isEqualTo(new Score(30, 0));
+    }
+
+    @Test
+    @DisplayName("Miss 점수")
+    void miss_getScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(7).bowl(2);
+        assertThat(now.getScore()).isEqualTo(new Score(9, 0));
+    }
+
+    @Test
+    @DisplayName("Spare - miss 점수")
+    void spare_miss_getScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(7).bowl(3)
+                .bowl(7).bowl(2);
+        assertThat(now.getScore()).isEqualTo(new Score(17, 0));
+    }
+
+    @Test
+    @DisplayName("Strike - miss 점수")
+    void strike_miss_getScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(10)
+                .bowl(7).bowl(2);
+        assertThat(now.getScore()).isEqualTo(new Score(19, 0));
+    }
+
+    @Test
+    @DisplayName("Strike - Strike -Strike 점수")
+    void strike_strike_strike_getScore() {
+        Frame now = new NormalFrame(1);
+        now.bowl(10)
+                .bowl(10)
+                .bowl(10);
+        assertThat(now.getScore()).isEqualTo(new Score(30, 0));
+    }
 
 }

@@ -1,5 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+import bowling.domain.exception.CannotCalculateException;
+
 import java.util.Objects;
 
 public class FirstBowl extends Running {
@@ -17,6 +20,15 @@ public class FirstBowl extends Running {
             return new Spare(this.firstPins, secondPins);
         }
         return new Miss(this.firstPins, secondPins);
+    }
+
+    @Override
+    public Score calculateExtraScore(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        throw new CannotCalculateException();
     }
 
     @Override

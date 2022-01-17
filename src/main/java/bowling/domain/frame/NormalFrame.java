@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 
@@ -38,6 +39,24 @@ public class NormalFrame implements Frame {
     @Override
     public State getState() {
         return this.state;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = this.state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return this.next.calculateExtraScore(score);
+    }
+
+    @Override
+    public Score calculateExtraScore(Score beforeScore) {
+        Score score = this.state.calculateExtraScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return this.next.calculateExtraScore(score);
     }
 
     @Override
