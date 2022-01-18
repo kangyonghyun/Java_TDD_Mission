@@ -1,13 +1,23 @@
 package bowling.domain;
 
-import bowling.domain.state.Strike;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
+
+    private Score strike;
+    private Score spare;
+    private Score miss;
+
+    @BeforeEach
+    void setUp() {
+        strike = Score.strike();
+        spare = Score.spare();
+        miss = Score.miss(8);
+    }
 
     @Test
     void create() {
@@ -16,33 +26,25 @@ class ScoreTest {
     }
 
     @Test
+    @DisplayName("정적 메소드 테스트")
     void miss() {
         assertThat(Score.miss(8)).isEqualTo(new Score(8, 0));
-    }
-
-    @Test
-    void strike() {
         assertThat(Score.strike()).isEqualTo(new Score(10, 2));
-    }
-
-    @Test
-    void spare() {
         assertThat(Score.spare()).isEqualTo(new Score(10, 1));
     }
 
     @Test
+    @DisplayName("left == 0 -> true")
     void canCalculateScore() {
-        Score strike = Score.strike();
         assertThat(strike.canCalculateScore()).isFalse();
-        Score miss = Score.miss(8);
         assertThat(miss.canCalculateScore()).isTrue();
     }
 
     @Test
+    @DisplayName("bowl() 호출 시 -> + 스코어, left - 1")
     void bowl() {
-        Score score = Score.strike();
-        Score result = score.bowl(5);
-        assertThat(result).isEqualTo(new Score(15, 1));
+        assertThat(strike.bowl(5)).isEqualTo(new Score(15, 1));
+        assertThat(spare.bowl(5)).isEqualTo(new Score(15, 0));
     }
 
 }

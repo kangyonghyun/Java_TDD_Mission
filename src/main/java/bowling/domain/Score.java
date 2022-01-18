@@ -1,10 +1,15 @@
 package bowling.domain;
 
+import bowling.domain.state.Pins;
+
 import java.util.Objects;
 
 public class Score {
 
     public static final int MIN_LEFT = 0;
+    public static final int ONE_LEFT = 1;
+    public static final int TWO_LEFT = 2;
+
     private final int total;
     private final int left;
 
@@ -14,15 +19,15 @@ public class Score {
     }
 
     public static Score miss(int total) {
-        return new Score(total, 0);
-    }
-
-    public static Score strike() {
-        return new Score(10, 2);
+        return new Score(total, MIN_LEFT);
     }
 
     public static Score spare() {
-        return new Score(10, 1);
+        return new Score(Pins.MAX_PINS, ONE_LEFT);
+    }
+
+    public static Score strike() {
+        return new Score(Pins.MAX_PINS, TWO_LEFT);
     }
 
     public boolean canCalculateScore() {
@@ -35,8 +40,12 @@ public class Score {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Score score = (Score) o;
         return total == score.total && left == score.left;
     }
@@ -53,4 +62,5 @@ public class Score {
                 ", left=" + left +
                 '}';
     }
+
 }
