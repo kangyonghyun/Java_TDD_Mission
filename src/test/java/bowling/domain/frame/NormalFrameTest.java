@@ -24,7 +24,7 @@ class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame(1, StateFactory.ready());
 
         // 같은 NormalFrame 객체 반환
-        Frame frame = normalFrame.bowl(9);
+        NormalFrame frame = (NormalFrame) normalFrame.bowl(9);
 
         assertThat(frame.getNo()).isEqualTo(1);
         assertThat(frame.getState()).isEqualTo(StateFactory.firstBowl(9));
@@ -61,7 +61,7 @@ class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame(1, ready);
 
         // 다음 NormalFrame 객체 생성후 반환
-        Frame frame = normalFrame.bowl(10);
+        NormalFrame frame = (NormalFrame) normalFrame.bowl(10);
 
         assertThat(normalFrame.getNo()).isEqualTo(1);
         assertThat(normalFrame.getState()).isExactlyInstanceOf(Strike.class);
