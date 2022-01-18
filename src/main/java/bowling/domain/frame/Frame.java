@@ -9,8 +9,6 @@ public interface Frame {
 
     int getNo();
 
-    State getState();
-
     Score getScore();
 
     Score calculateExtraScore(Score beforeScore);
