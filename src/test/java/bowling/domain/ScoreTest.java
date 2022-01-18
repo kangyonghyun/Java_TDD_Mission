@@ -1,10 +1,12 @@
 package bowling.domain;
 
+import bowling.domain.exception.CannotCalculateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTest {
 
@@ -45,6 +47,21 @@ class ScoreTest {
     void bowl() {
         assertThat(strike.bowl(5)).isEqualTo(new Score(15, 1));
         assertThat(spare.bowl(5)).isEqualTo(new Score(15, 0));
+    }
+
+    @Test
+    @DisplayName("left==0 인 score 객체만 스코어 반환")
+    void getScore() {
+        assertThat(miss.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("left!=0 인 score 객체가 getScore() 호출 -> CannotCalculateException 반환")
+    void invalid_getScore() {
+        assertThatThrownBy(() -> strike.getScore())
+                .isInstanceOf(CannotCalculateException.class);
+        assertThatThrownBy(() -> spare.getScore())
+                .isInstanceOf(CannotCalculateException.class);
     }
 
 }

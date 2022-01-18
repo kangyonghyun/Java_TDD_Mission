@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.state.Pins;
 
 import java.util.Objects;
@@ -37,6 +38,15 @@ public class Score {
     public Score bowl(int downOfPins) {
         return new Score(this.total + downOfPins, this.left - 1);
     }
+
+    // TODO 테스트
+    public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CannotCalculateException();
+        }
+        return this.total;
+    }
+
 
     @Override
     public boolean equals(Object o) {

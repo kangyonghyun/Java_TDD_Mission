@@ -25,20 +25,26 @@ public class NormalFrame implements Frame {
     public Frame bowl(int downOfPins) {
         this.state = this.state.bowl(downOfPins);
         if (this.state.isFinal()) {
-            this.next = new NormalFrame(no + 1);
+            this.next = createNext();
             return next;
         }
         return this;
     }
 
-    @Override
-    public int getNo() {
-        return this.no;
+    private Frame createNext() {
+        if (isLastFrame()) {
+            return new LastFrame();
+        }
+        return new NormalFrame(no + 1);
+    }
+
+    private boolean isLastFrame() {
+        return no + 1 == 10;
     }
 
     @Override
-    public State getState() {
-        return this.state;
+    public int getNo() {
+        return this.no;
     }
 
     @Override
@@ -48,6 +54,10 @@ public class NormalFrame implements Frame {
             return score;
         }
         return this.next.calculateExtraScore(score);
+    }
+
+    public State getState() {
+        return this.state;
     }
 
     @Override
