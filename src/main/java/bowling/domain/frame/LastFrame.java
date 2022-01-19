@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Board;
+import bowling.domain.FrameResult;
 import bowling.domain.Score;
 import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.exception.GameOverException;
@@ -77,6 +79,27 @@ public class LastFrame implements Frame {
         return beforeScore;
     }
 
+    @Override
+    public void addFrameResult(Board board) {
+        board.add(getFrameResult());
+    }
+
+    private FrameResult getFrameResult() {
+        if (!isFinished()) {
+            return new FrameResult(NormalFrame.UNSCORE_VALUE);
+        }
+        try {
+            return new FrameResult(getScore().getScore());
+        } catch (CannotCalculateException e) {
+            return new FrameResult(NormalFrame.UNSCORE_VALUE);
+        }
+    }
+
+    @Override
+    public Board createBoard() {
+        throw new UnsupportedOperationException();
+    }
+
     public LinkedList<State> getStates() {
         return this.states;
     }
@@ -97,4 +120,5 @@ public class LastFrame implements Frame {
     public int hashCode() {
         return Objects.hash(states);
     }
+
 }

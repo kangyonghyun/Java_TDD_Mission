@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Board;
 import bowling.domain.Score;
 import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.exception.GameOverException;
@@ -158,6 +159,19 @@ public class LastFrameTest {
                 Arguments.of((ThrowingCallable) () -> lastFrame.bowl(8).bowl(2).bowl(5).bowl(5)),
                 Arguments.of((ThrowingCallable) () -> lastFrame.bowl(8).bowl(1).bowl(5))
         );
+    }
+
+    @Test
+    @DisplayName("board 에 FrameResult 값 저장")
+    void addFrameResult() {
+        lastFrame
+                .bowl(10)
+                .bowl(10)
+                .bowl(10);
+        Board board = new Board();
+        lastFrame.addFrameResult(board);
+        assertThat(board.getResults()).size().isEqualTo(1);
+        assertThat(board.getGameScore()).isEqualTo(30);
     }
 
 }

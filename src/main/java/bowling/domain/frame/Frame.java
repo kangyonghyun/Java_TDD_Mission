@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Board;
 import bowling.domain.Score;
-import bowling.domain.state.State;
 
 public interface Frame {
 
@@ -12,5 +12,9 @@ public interface Frame {
     Score getScore();
 
     Score calculateExtraScore(Score beforeScore);
+
+    void addFrameResult(Board board);
+
+    Board createBoard();
 
 }

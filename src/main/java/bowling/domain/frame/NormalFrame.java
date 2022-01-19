@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.Board;
+import bowling.domain.FrameResult;
 import bowling.domain.Score;
+import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 
@@ -8,6 +11,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
+    public static final int UNSCORE_VALUE = -1;
     private final int no;
     private State state;
     private Frame next;
@@ -67,6 +71,32 @@ public class NormalFrame implements Frame {
             return score;
         }
         return this.next.calculateExtraScore(score);
+    }
+
+    @Override
+    public void addFrameResult(Board board) {
+        board.add(getFrameResult());
+        if (next != null) {
+            next.addFrameResult(board);
+        }
+    }
+
+    private FrameResult getFrameResult() {
+        if (!this.state.isFinal()) {
+            return new FrameResult(UNSCORE_VALUE);
+        }
+        try {
+            return new FrameResult(getScore().getScore());
+        } catch (CannotCalculateException e) {
+            return new FrameResult(UNSCORE_VALUE);
+        }
+    }
+
+    @Override
+    public Board createBoard() {
+        Board board = new Board();
+        addFrameResult(board);
+        return board;
     }
 
     @Override

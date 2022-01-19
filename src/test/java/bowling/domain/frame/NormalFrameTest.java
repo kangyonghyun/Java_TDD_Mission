@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Board;
+import bowling.domain.FrameResult;
 import bowling.domain.Score;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
@@ -138,5 +140,22 @@ class NormalFrameTest {
                 .bowl(10);
         assertThat(now.getScore()).isEqualTo(new Score(30, 0));
     }
+
+    @Test
+    @DisplayName("보드 생성 후 FrameResult 값 저장")
+    void addFrameResult2() {
+        NormalFrame now = new NormalFrame(1);
+        now
+                .bowl(7).bowl(3)    //result - 17
+                .bowl(7).bowl(1)              //result - 25
+                .bowl(10)                     //result - 44
+                .bowl(8).bowl(1);             //result - 53
+                                          //result(-1) - 0 - !isFinal()
+        Board board = now.createBoard();
+
+        assertThat(board.getResults()).size().isEqualTo(5);
+        assertThat(board.getGameScore()).isEqualTo(53);
+    }
+
 
 }
