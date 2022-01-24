@@ -9,17 +9,18 @@ public class LineCreator {
         List<Cross> crosses = new ArrayList<>();
 
         //첫번쨰 크로스
-        Cross first = new Cross(0, Point.first(true));
-        crosses.add(first);
+        Cross cross = Cross.first(RandomGenerator.generateRandom());
+        crosses.add(cross);
 
         //중간 크로스
-        for (int i = 1; i < width - 2; i++) {
-            Cross cross = crosses.get(i - 1);
-            crosses.add(new Cross(i, cross.getPoint().next(false)));
+        while (cross.untilBeforeLastCross(width)) {
+            cross = cross.next();
+            crosses.add(cross);
         }
 
         //마지막 크로스
-        crosses.add(new Cross(width, crosses.get(width - 2).getPoint().last()));
+        cross = cross.last();
+        crosses.add(cross);
 
         return new Line(crosses);
     }
