@@ -2,12 +2,16 @@ package ladder.domain;
 
 public class Cross {
 
-    private final Point point;
     private final int index;
+    private final Point point;
 
     public Cross(int index, Point point) {
         this.index = index;
         this.point = point;
+    }
+
+    public static Cross first(boolean right){
+        return new Cross(0, Point.first(right));
     }
 
     public int move() {
@@ -23,12 +27,33 @@ public class Cross {
         return this.index;
     }
 
+    public Cross next() {
+        return new Cross(this.index + 1, this.point.next());
+    }
+
+    public Cross next(boolean right) {
+        return new Cross(this.index + 1, this.point.next(right));
+    }
+
+    public Cross last() {
+        return new Cross(this.index + 1, this.point.last());
+    }
+
+    public boolean untilBeforeLastCross(int width) {
+        return this.index < width - 2;
+    }
+
     public int getIndex() {
         return this.index;
     }
 
     public Point getPoint() {
         return this.point;
+    }
+
+    @Override
+    public String toString() {
+        return point + ", index=" + index;
     }
 
 }

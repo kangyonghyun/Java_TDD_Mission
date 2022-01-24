@@ -1,5 +1,6 @@
 package ladder.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,24 +8,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CrossTest {
 
     @Test
+    @DisplayName("첫 크로스 생성")
+    void first_create() {
+        Cross first = Cross.first(true);
+        assertThat(first.getIndex()).isEqualTo(0);
+        assertThat(first.getPoint()).isEqualTo(Point.first(true));
+    }
+
+    @Test
+    @DisplayName("true : next() -> true, false / false : next() -> false / ??(random)")
+    void next() {
+        Cross next = Cross.first(true).next();
+        assertThat(next.getIndex()).isEqualTo(1);
+        assertThat(next.getPoint()).isEqualTo(Point.first(true).next(false));
+    }
+
+    @Test
     void move_right() {
-        Point first = Point.first(true);
-        Cross cross = new Cross(1, first);
-        assertThat(cross.move()).isEqualTo(2);
+        Cross cross = Cross.first(true);
+        assertThat(cross.move()).isEqualTo(1);
     }
 
     @Test
     void move_south() {
-        Point first = Point.first(false);
-        Cross cross = new Cross(1, first);
-        assertThat(cross.move()).isEqualTo(1);
+        Cross cross = Cross.first(false);
+        assertThat(cross.move()).isEqualTo(0);
     }
 
     @Test
     void move_left() {
-        Point next = Point.first(true).next(false);
-        Cross cross = new Cross(2, next);
-        assertThat(cross.move()).isEqualTo(1);
+        // cross (1, true, false)
+        Cross cross =  Cross.first(true).next(false);
+        assertThat(cross.move()).isEqualTo(0);
     }
 
 }

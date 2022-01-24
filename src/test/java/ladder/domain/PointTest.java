@@ -14,6 +14,13 @@ class PointTest {
     }
 
     @Test
+    void next() {
+        Point first = Point.first(true);
+        Point next = first.next();
+        assertThat(next.move()).isEqualTo(Direction.LEFT);
+    }
+
+    @Test
     void next_left() {
         Point next = Point.first(true).next(false);
         assertThat(next.move()).isEqualTo(Direction.LEFT);
