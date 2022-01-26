@@ -44,6 +44,10 @@ public class Point {
         return Direction.SOUTH;
     }
 
+    public boolean isCurrent() {
+        return this.current;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
