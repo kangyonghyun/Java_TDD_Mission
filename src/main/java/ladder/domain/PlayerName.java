@@ -14,6 +14,10 @@ public class PlayerName {
         this.name = name;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -36,7 +40,4 @@ public class PlayerName {
         return "PlayerName= " + name;
     }
 
-    public String getName() {
-        return this.name;
-    }
 }

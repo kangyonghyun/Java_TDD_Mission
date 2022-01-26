@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Players {
 
+    public static final String ERROR_NOT_FOUND_PLAYER = "찾는 선수가 없습니다";
     private final List<Player> players = new ArrayList<>();
 
     public Players() {
@@ -15,6 +16,18 @@ public class Players {
         for (String name : playerNames) {
             this.players.add(new Player(name));
         }
+    }
+
+    public int findIndexByName(Player findPlayer) {
+        if (!this.players.contains(findPlayer)) {
+            throw new IllegalArgumentException(ERROR_NOT_FOUND_PLAYER);
+        }
+
+        return this.players.indexOf(findPlayer);
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
     }
 
     @Override
@@ -34,7 +47,4 @@ public class Players {
         return Objects.hash(players);
     }
 
-    public List<Player> getPlayers() {
-        return this.players;
-    }
 }
