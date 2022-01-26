@@ -8,7 +8,8 @@ class LineCreatorTest {
 
     @Test
     void create() {
-        Line line = LineCreator.createLine(4);
+        LineCreator lineCreator = new LineCreator();
+        Line line = lineCreator.createLine(4);
         System.out.println(line);
         assertThat(line.getCrosses()).size().isEqualTo(4);
     }

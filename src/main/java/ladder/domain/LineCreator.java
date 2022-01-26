@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LineCreator {
 
-    public static Line createLine(int width) {
+    public Line createLine(int width) {
         List<Cross> crosses = new ArrayList<>();
 
         //첫번쨰 크로스
