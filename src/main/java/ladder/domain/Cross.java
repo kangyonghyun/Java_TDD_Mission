@@ -43,6 +43,10 @@ public class Cross {
         return this.index < width - 2;
     }
 
+    public boolean isRight() {
+        return this.point.isCurrent();
+    }
+
     public int getIndex() {
         return this.index;
     }
