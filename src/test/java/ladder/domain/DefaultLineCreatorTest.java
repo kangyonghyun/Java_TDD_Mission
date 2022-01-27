@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LineCreatorTest {
+class DefaultLineCreatorTest {
 
     @Test
     void create() {
-        LineCreator lineCreator = new LineCreator();
+        DefaultLineCreator lineCreator = new DefaultLineCreator();
         Line line = lineCreator.createLine(4);
         System.out.println(line);
         assertThat(line.getCrosses()).size().isEqualTo(4);

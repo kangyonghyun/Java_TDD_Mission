@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LadderCreatorTest {
+class DefaultLadderCreatorTest {
 
     @Test
     void create_ladder() {
-        LineCreator lineCreator = new LineCreator();
-        LadderCreator ladderCreator = new LadderCreator(lineCreator);
+        DefaultLineCreator lineCreator = new DefaultLineCreator();
+        DefaultLadderCreator ladderCreator = new DefaultLadderCreator(lineCreator);
 
         Ladder ladder = ladderCreator.createLadder(5, 4);
 
