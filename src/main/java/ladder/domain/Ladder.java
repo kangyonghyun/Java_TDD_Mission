@@ -1,5 +1,7 @@
 package ladder.domain;
 
+import ladder.domain.result.LadderResult;
+
 import java.util.List;
 
 public class Ladder {
