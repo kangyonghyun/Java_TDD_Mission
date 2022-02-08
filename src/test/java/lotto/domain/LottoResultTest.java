@@ -22,4 +22,13 @@ class LottoResultTest {
         assertThat(result.getResults().get(Rank.MISS)).isEqualTo(1);
     }
 
+    @Test
+    void getPrize() {
+        LottoResult result = new LottoResult();
+        result.putRank(Rank.MISS);
+        result.putRank(Rank.FIFTH);
+        result.putRank(Rank.FIRST);
+        assertThat(result.getPrize()).isEqualTo(new Money(2_000_005_000));
+    }
+
 }

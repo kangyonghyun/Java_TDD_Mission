@@ -46,8 +46,16 @@ public enum Rank {
         return this.countOfMatch == match;
     }
 
+    public Money prize(int countOfMatch) {
+        return new Money(countOfMatch * winningMoney);
+    }
+
     public int getWinningMoney() {
         return winningMoney;
+    }
+
+    public int getCountOfMatch() {
+        return countOfMatch;
     }
 
 }

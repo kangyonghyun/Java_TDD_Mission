@@ -27,6 +27,18 @@ public class LottoNumber {
         return lottoNumberCash.get(number);
     }
 
+    public static LottoNumber of(String value) {
+        if (Objects.isNull(value)) {
+            throw new IllegalArgumentException();
+        }
+
+        return of(Integer.parseInt(value.trim()));
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -49,4 +61,5 @@ public class LottoNumber {
     public String toString() {
         return "" + number;
     }
+
 }

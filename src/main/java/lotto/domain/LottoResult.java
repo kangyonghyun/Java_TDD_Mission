@@ -17,6 +17,15 @@ public class LottoResult {
         this.results.put(rank, results.get(rank) + 1);
     }
 
+    public Money getPrize() {
+        Money prize = new Money(0);
+        for (Rank rank : results.keySet()) {
+            Money prizePerRank = rank.prize(results.get(rank));
+            prize = prize.sum(prizePerRank);
+        }
+        return prize;
+    }
+
     public Map<Rank, Integer> getResults() {
         return results;
     }
@@ -27,4 +36,5 @@ public class LottoResult {
                 "results=" + results +
                 '}';
     }
+
 }

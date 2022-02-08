@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import lotto.domain.generator.LottoAutoGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ class LottoGameTest {
 
     @Test
     void autoGenerate() {
-        LottoGenerator lottoGenerator = new LottoGenerator();
-        List<Lotto> lotteries = lottoGenerator.autoGenerateLotto(new Money(14000));
+        LottoAutoGenerator lottoAutoGenerator = new LottoAutoGenerator();
+        List<Lotto> lotteries = lottoAutoGenerator.generate(new Money(14000));
         assertThat(lotteries).size().isEqualTo(14);
     }
 

@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -41,6 +42,18 @@ public class Lotto {
 
     public boolean containBonusNo(LottoNumber bonusNo) {
         return this.lottoNumbers.contains(bonusNo);
+    }
+
+    public static Lotto ofComma(String value) {
+        String[] values = value.split(",");
+        return new Lotto(
+                Arrays.stream(values)
+                        .map(LottoNumber::of)
+                        .collect(Collectors.toSet()));
+    }
+
+    public Set<LottoNumber> getLottoNumbers() {
+        return lottoNumbers;
     }
 
     @Override

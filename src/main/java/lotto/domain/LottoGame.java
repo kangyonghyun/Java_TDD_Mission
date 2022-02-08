@@ -1,17 +1,19 @@
 package lotto.domain;
 
+import lotto.domain.generator.LottoGenerator;
+
 import java.util.List;
 
 public class LottoGame {
 
-    List<Lotto> lotteries;
+    private final List<Lotto> lotteries;
 
     public LottoGame(List<Lotto> lotteries) {
         this.lotteries = lotteries;
     }
 
     public LottoGame(Money money, LottoGenerator generator) {
-        this.lotteries = generator.autoGenerateLotto(money);
+        this.lotteries = generator.generate(money);
     }
 
     public LottoResult match(WiningLotto winingLotto) {
@@ -19,7 +21,6 @@ public class LottoGame {
         for (Lotto lottery : lotteries) {
             lottoResult.putRank(winingLotto.match(lottery));
         }
-
         return lottoResult;
     }
 
@@ -29,4 +30,5 @@ public class LottoGame {
                 "lotteries=" + lotteries +
                 '}';
     }
+
 }
