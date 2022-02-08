@@ -1,12 +1,16 @@
-package lotto.domain;
+package lotto.domain.generator;
+
+import lotto.domain.Lotto;
+import lotto.domain.Money;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LottoGenerator {
+public class LottoAutoGenerator implements LottoGenerator {
 
-    public List<Lotto> autoGenerateLotto(Money money) {
+    @Override
+    public List<Lotto> generate(Money money) {
         List<Lotto> lotteries = new ArrayList<>();
         for (int i = 0; i < money.countOfBuyingLotto(); i++) {
             lotteries.add(generateRandomNumber());
