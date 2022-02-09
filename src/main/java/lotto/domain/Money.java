@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Money {
 
+    public static final int PRICE_PER_LOTTO = 1000;
     private final int price;
 
     public Money(int price) {
@@ -14,11 +15,11 @@ public class Money {
     }
 
     public int countOfBuyingLotto() {
-        return this.price / 1000;
+        return this.price / PRICE_PER_LOTTO;
     }
 
     public Money buyManual(int countOfManual) {
-        return new Money(this.price - (countOfManual * 1000));
+        return new Money(this.price - (countOfManual * PRICE_PER_LOTTO));
     }
 
     public Money sum(Money prize) {

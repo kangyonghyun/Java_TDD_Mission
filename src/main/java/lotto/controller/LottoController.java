@@ -40,7 +40,7 @@ public class LottoController {
         WiningLotto winingLotto = new WiningLotto(Lotto.of(numbers), LottoNumber.of(bonusBall));
 
         // 로또게임에 구매로또와 당첨로또 매칭 -> result
-        LottoGame lottoGame = new LottoGame(lotteries);
+        LottoGame lottoGame = new LottoGame(orderMoney, lottoGenerator);
         LottoResult result = lottoGame.match(winingLotto);
 
         // 주문 로또 번호 출력

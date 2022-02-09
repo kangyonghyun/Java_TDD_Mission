@@ -9,8 +9,12 @@ public class LottoNumber {
 
     private static final Map<Integer, LottoNumber> lottoNumberCash = new HashMap<>();
 
+    private static final int MIN_LOTTO_NUMBER = 1;
+
+    private static final int MAX_LOTTO_NUMBER = 45;
+
     static {
-        IntStream.range(1, 46)
+        IntStream.rangeClosed(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
                 .forEach(num -> lottoNumberCash.put(num, new LottoNumber(num)));
     }
 
@@ -21,7 +25,7 @@ public class LottoNumber {
     }
 
     public static LottoNumber of(int number) {
-        if (number < 1 || number > 45) {
+        if (number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER) {
             throw new IllegalArgumentException("1-45");
         }
         return lottoNumberCash.get(number);

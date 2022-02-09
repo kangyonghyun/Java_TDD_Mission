@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LottoResult {
 
-    Map<Rank, Integer> results = new HashMap<>();
+    private final Map<Rank, Integer> results = new HashMap<>();
 
     public LottoResult() {
         for (Rank rank : Rank.values()) {
