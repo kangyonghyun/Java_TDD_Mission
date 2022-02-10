@@ -22,6 +22,10 @@ public class Car {
         this.position = new Position(position);
     }
 
+    public static Car of(String name) {
+        return new Car(name);
+    }
+
     public Car move(int randomNumber) {
         if (randomNumber >= MIN_MOVABLE_VALUE) {
             return move();
@@ -44,10 +48,22 @@ public class Car {
         return this.position.isSame(maxPosition);
     }
 
+    public CarName getCarName() {
+        return carName;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Car car = (Car) o;
         return Objects.equals(carName, car.carName) && Objects.equals(position, car.position);
     }

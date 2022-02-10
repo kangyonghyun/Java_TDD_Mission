@@ -2,9 +2,10 @@ package racingcar.domain;
 
 import racingcar.domain.strategy.MovingStrategy;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Cars {
 
@@ -14,28 +15,22 @@ public class Cars {
         this.cars = cars;
     }
 
+    public static Cars of(List<String> names) {
+        List<Car> cars = names.stream()
+                .map(Car::of)
+                .collect(Collectors.toList());
+        return new Cars(cars);
+    }
+
     public Cars moveCars(MovingStrategy strategy) {
-        List<Car> newCars = new ArrayList<>();
-        for (Car car : this.cars) {
-            Car newCar = car.move(strategy.generate());
-            newCars.add(newCar);
-        }
+        List<Car> newCars = this.cars.stream()
+                .map(car -> car.move(strategy.generate()))
+                .collect(Collectors.toList());
         return new Cars(newCars);
     }
 
     public List<Car> getCars() {
         return Collections.unmodifiableList(this.cars);
-    }
-
-    public List<Car> findWinners1() {
-        List<Car> winners = new ArrayList<>();
-        Position maxPosition = getMaxPosition();
-        for (Car car : this.cars) {
-            if (car.isWinner(maxPosition)) {
-                winners.add(car);
-            }
-        }
-        return winners;
     }
 
     public Winners findWinners() {
@@ -58,6 +53,23 @@ public class Cars {
             maxPosition = car.maxPosition(maxPosition);
         }
         return maxPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Cars cars1 = (Cars) o;
+        return Objects.equals(cars, cars1.cars);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cars);
     }
 
 }
