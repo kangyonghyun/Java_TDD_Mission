@@ -9,8 +9,8 @@ class TryNoTest {
 
     @Test
     void o_create() {
-        TryNo no = new TryNo(1);
-        assertThat(no).isEqualTo(new TryNo(1));
+        TryNo no = new TryNo(0);
+        assertThat(no).isEqualTo(new TryNo(0));
     }
 
     @Test
