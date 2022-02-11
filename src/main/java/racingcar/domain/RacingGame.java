@@ -8,18 +8,16 @@ public class RacingGame {
 
     private final Cars cars;
     private final TryNo tryNo;
-    private final MovingStrategy strategy;
 
-    public RacingGame(Cars cars, int tryNo, MovingStrategy strategy) {
+    public RacingGame(Cars cars, int tryNo) {
         this.cars = cars;
         this.tryNo = new TryNo(tryNo);
-        this.strategy = strategy;
     }
 
-    public RacingGame race() {
-        Cars cars = this.cars.moveCars(this.strategy);
-        int no = tryNo.race();
-        return new RacingGame(cars, no, this.strategy);
+    public RacingGame race(MovingStrategy strategy) {
+        Cars cars = this.cars.moveCars(strategy);
+        int remaining = this.tryNo.race();
+        return new RacingGame(cars, remaining);
     }
 
     public Winners findWinners() {
@@ -27,7 +25,7 @@ public class RacingGame {
     }
 
     public boolean isEndGame() {
-        return this.tryNo.isZero();
+        return this.tryNo.isTryNoZero();
     }
 
     public Cars getCars() {
@@ -47,12 +45,12 @@ public class RacingGame {
             return false;
         }
         RacingGame that = (RacingGame) o;
-        return Objects.equals(cars, that.cars) && Objects.equals(tryNo, that.tryNo) && Objects.equals(strategy, that.strategy);
+        return Objects.equals(cars, that.cars) && Objects.equals(tryNo, that.tryNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cars, tryNo, strategy);
+        return Objects.hash(cars, tryNo);
     }
 
 }

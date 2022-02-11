@@ -20,12 +20,12 @@ public class RacingController {
         // 시도 횟수 입력
         int tryNo = InputView.inputTryCount();
 
-        RacingGame racingGame = new RacingGame(cars, tryNo, strategy);
+        RacingGame racingGame = new RacingGame(cars, tryNo);
 
         // 겜 시작
         OutputView.printResultMessage();
         while (!racingGame.isEndGame()) {
-            racingGame = racingGame.race();
+            racingGame = racingGame.race(strategy);
             OutputView.printResult(racingGame.getCars());
         }
 

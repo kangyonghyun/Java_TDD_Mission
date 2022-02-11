@@ -17,7 +17,7 @@ public class TryNo {
         return this.no - 1;
     }
 
-    public boolean isZero() {
+    public boolean isTryNoZero() {
         return this.no == 0;
     }
 
