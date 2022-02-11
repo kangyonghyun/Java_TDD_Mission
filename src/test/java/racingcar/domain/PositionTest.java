@@ -18,5 +18,16 @@ class PositionTest {
         assertThatThrownBy(() -> new Position(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+    @Test
+    void isMoreThan() {
+        Position position = new Position(3);
+        assertThat(position.isMoreThan(new Position(2))).isTrue();
+    }
+
+    @Test
+    void isSame() {
+        Position position = new Position(3);
+        assertThat(position.isSame(new Position(3))).isTrue();
+    }
 
 }
