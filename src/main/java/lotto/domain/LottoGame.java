@@ -3,17 +3,14 @@ package lotto.domain;
 import lotto.domain.generator.LottoGenerator;
 
 import java.util.List;
+import java.util.Objects;
 
 public class LottoGame {
 
     private final List<Lotto> lotteries;
 
-    public LottoGame(List<Lotto> lotteries) {
-        this.lotteries = lotteries;
-    }
-
-    public LottoGame(Money money, LottoGenerator generator) {
-        this.lotteries = generator.generate(money);
+    public LottoGame(LottoGenerator generator) {
+        this.lotteries = generator.generate();
     }
 
     public LottoResult match(WiningLotto winingLotto) {
@@ -22,6 +19,27 @@ public class LottoGame {
             lottoResult.putRank(winingLotto.match(lottery));
         }
         return lottoResult;
+    }
+
+    public List<Lotto> getLotteries() {
+        return this.lotteries;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        LottoGame lottoGame = (LottoGame) o;
+        return Objects.equals(lotteries, lottoGame.lotteries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lotteries);
     }
 
     @Override

@@ -5,10 +5,11 @@ import java.util.Objects;
 public class Money {
 
     public static final int PRICE_PER_LOTTO = 1000;
+    public static final int MIN_PRICE = 0;
     private final int price;
 
     public Money(int price) {
-        if (price < 0) {
+        if (price < MIN_PRICE) {
             throw new IllegalArgumentException("마이너스 금액은 안됩니다!");
         }
         this.price = price;
@@ -27,6 +28,9 @@ public class Money {
     }
 
     public double profitRate(Money prize) {
+        if (this.price == 0) {
+            throw new IllegalArgumentException("금액이 0원일 경우 계산할 수 없습니다");
+        }
         return prize.price / this.price;
     }
 

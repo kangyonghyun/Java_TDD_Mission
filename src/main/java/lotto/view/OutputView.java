@@ -44,7 +44,7 @@ public class OutputView {
             builder.append("\n");
         }
         System.out.print(builder);
-        Money prize = result.getPrize();
+        Money prize = result.getTotalPrize();
         double rate = orderMoney.profitRate(prize);
         System.out.println("총 수익률은 " + format(rate)  + "입니다.");
     }

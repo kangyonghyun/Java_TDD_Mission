@@ -1,9 +1,6 @@
 package lotto.domain;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Lotto {
@@ -26,18 +23,13 @@ public class Lotto {
     }
 
     public int match(Lotto target) {
-        int count = 0;
-        for (LottoNumber lottoNumber : this.lottoNumbers) {
-            count += target.increment(lottoNumber);
-        }
-        return count;
+        return this.lottoNumbers.stream()
+                .mapToInt(target::increment)
+                .sum();
     }
 
     private int increment(LottoNumber lottoNumber) {
-        if (this.lottoNumbers.contains(lottoNumber)) {
-            return 1;
-        }
-        return 0;
+        return this.lottoNumbers.contains(lottoNumber) ? 1 : 0;
     }
 
     public boolean containBonusNo(LottoNumber bonusNo) {
@@ -45,15 +37,14 @@ public class Lotto {
     }
 
     public static Lotto ofComma(String value) {
-        String[] values = value.split(",");
-        return new Lotto(
-                Arrays.stream(values)
-                        .map(LottoNumber::of)
-                        .collect(Collectors.toSet()));
+        Set<LottoNumber> numbers = Arrays.stream(value.split(","))
+                .map(LottoNumber::of)
+                .collect(Collectors.toSet());
+        return new Lotto(numbers);
     }
 
     public Set<LottoNumber> getLottoNumbers() {
-        return lottoNumbers;
+        return Collections.unmodifiableSet(this.lottoNumbers);
     }
 
     @Override

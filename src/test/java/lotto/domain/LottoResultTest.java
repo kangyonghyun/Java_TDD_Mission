@@ -9,17 +9,17 @@ class LottoResultTest {
     @Test
     void create() {
         LottoResult result = new LottoResult();
+        assertThat(result).isEqualTo(new LottoResult());
         assertThat(result.getResults()).size().isEqualTo(6);
-        for (Rank rank : Rank.values()) {
-            assertThat(result.getResults().get(rank)).isEqualTo(0);
-        }
     }
 
     @Test
     void putRank() {
         LottoResult result = new LottoResult();
         result.putRank(Rank.MISS);
-        assertThat(result.getResults().get(Rank.MISS)).isEqualTo(1);
+        result.putRank(Rank.MISS);
+        result.putRank(Rank.MISS);
+        assertThat(result.getResults().get(Rank.MISS)).isEqualTo(3);
     }
 
     @Test
@@ -28,7 +28,7 @@ class LottoResultTest {
         result.putRank(Rank.MISS);
         result.putRank(Rank.FIFTH);
         result.putRank(Rank.FIRST);
-        assertThat(result.getPrize()).isEqualTo(new Money(2_000_005_000));
+        assertThat(result.getTotalPrize()).isEqualTo(new Money(2_000_005_000));
     }
 
 }

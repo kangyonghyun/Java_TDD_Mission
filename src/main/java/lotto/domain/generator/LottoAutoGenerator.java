@@ -1,32 +1,55 @@
 package lotto.domain.generator;
 
 import lotto.domain.Lotto;
+import lotto.domain.LottoNumber;
 import lotto.domain.Money;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LottoAutoGenerator implements LottoGenerator {
 
-    @Override
-    public List<Lotto> generate(Money money) {
-        List<Lotto> lotteries = new ArrayList<>();
-        for (int i = 0; i < money.countOfBuyingLotto(); i++) {
-            lotteries.add(generateRandomNumber());
-        }
+    private final Money money;
 
-        return lotteries;
+    public LottoAutoGenerator(Money money) {
+        this.money = money;
+    }
+
+    @Override
+    public List<Lotto> generate() {
+        return IntStream.range(0, this.money.countOfBuyingLotto())
+                .mapToObj(range -> generateRandomNumber())
+                .collect(Collectors.toList());
     }
 
     private Lotto generateRandomNumber() {
-        List<Integer> randomNumbers = new ArrayList<>();
-        for (int i = 1; i < 46; i++) {
-            randomNumbers.add(i);
-        }
+        List<Integer> randomNumbers = IntStream
+                .rangeClosed(LottoNumber.MIN_LOTTO_NUMBER, LottoNumber.MAX_LOTTO_NUMBER)
+                .boxed()
+                .collect(Collectors.toList());
         Collections.shuffle(randomNumbers);
 
         return Lotto.of(randomNumbers.subList(0, 6));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        LottoAutoGenerator that = (LottoAutoGenerator) o;
+        return Objects.equals(money, that.money);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 
 }

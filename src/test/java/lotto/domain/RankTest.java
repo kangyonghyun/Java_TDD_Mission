@@ -1,12 +1,15 @@
 package lotto.domain;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RankTest {
 
@@ -26,6 +29,18 @@ class RankTest {
                 Arguments.of(5, true, Rank.SECOND),
                 Arguments.of(6, false, Rank.FIRST)
         );
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0, 1, 2, 7})
+    void not_rank() {
+        assertThatThrownBy(() -> Rank.valueOf(7, false))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void prize() {
+        assertThat(Rank.FIFTH.prize(2)).isEqualTo(new Money(2 * 5_000));
     }
 
 }

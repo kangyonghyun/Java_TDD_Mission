@@ -2,15 +2,11 @@ package lotto.controller;
 
 import lotto.domain.*;
 import lotto.domain.generator.DefaultLottoGenerator;
-import lotto.domain.generator.LottoAutoGenerator;
 import lotto.domain.generator.LottoGenerator;
-import lotto.domain.generator.LottoManualGenerator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LottoController {
 
@@ -28,11 +24,8 @@ public class LottoController {
         String manualLotteries = InputView.inputManualLottoNumbers(countOfManual);
 
         // LottoGenerator 생성 -> 전체(수동+자동) 로또 생성
-        Map<String, LottoGenerator> map = new HashMap<>();
-        map.put("auto", new LottoAutoGenerator());
-        map.put("manual", new LottoManualGenerator(manualLotteries));
-        LottoGenerator lottoGenerator = new DefaultLottoGenerator(map);
-        List<Lotto> lotteries = lottoGenerator.generate(orderMoney);
+        LottoGenerator lottoGenerator = new DefaultLottoGenerator(manualLotteries, autoMoney);
+        List<Lotto> lotteries = lottoGenerator.generate();
 
         // 당첨번호, 보너스볼
         List<Integer> numbers = InputView.inputWinningNumbers();
@@ -40,7 +33,7 @@ public class LottoController {
         WiningLotto winingLotto = new WiningLotto(Lotto.of(numbers), LottoNumber.of(bonusBall));
 
         // 로또게임에 구매로또와 당첨로또 매칭 -> result
-        LottoGame lottoGame = new LottoGame(orderMoney, lottoGenerator);
+        LottoGame lottoGame = new LottoGame(lottoGenerator);
         LottoResult result = lottoGame.match(winingLotto);
 
         // 주문 로또 번호 출력
