@@ -39,11 +39,9 @@ public class Cars {
 
     private Winners winners(Position maxPosition) {
         Winners winners = new Winners();
-        for (Car car : this.cars) {
-            if (car.isWinner(maxPosition)) {
-                winners.addWinner(car);
-            }
-        }
+        this.cars.stream()
+                .filter(car -> car.isWinner(maxPosition))
+                .forEach(winners::addWinner);
         return winners;
     }
 

@@ -24,6 +24,14 @@ class CarsTest {
     }
 
     @Test
+    void not_moveCars() {
+        Cars cars = new Cars(Arrays.asList(new Car("k5"), new Car("k3")));
+        Cars newCars = cars.moveCars(() -> 3);
+        assertThat(newCars.getCars()).size().isEqualTo(2);
+        assertThat(newCars.getCars()).containsExactly(new Car("k5"), new Car("k3"));
+    }
+
+    @Test
     @DisplayName("중복 1등 찾기")
     void double_findWinners() {
         Cars cars = new Cars(Arrays.asList(
