@@ -18,7 +18,7 @@ public class Position {
         this.pos = pos;
     }
 
-    public int plus() {
+    public int increment() {
         return this.pos + 1;
     }
 

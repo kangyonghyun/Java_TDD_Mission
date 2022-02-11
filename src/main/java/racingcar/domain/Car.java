@@ -9,6 +9,10 @@ public class Car {
     private final CarName carName;
     private final Position position;
 
+    public static Car of(String name) {
+        return new Car(name);
+    }
+
     public Car(String carName) {
         this(carName, 0);
     }
@@ -22,10 +26,6 @@ public class Car {
         this.position = new Position(position);
     }
 
-    public static Car of(String name) {
-        return new Car(name);
-    }
-
     public Car move(int randomNumber) {
         if (randomNumber >= MIN_MOVABLE_VALUE) {
             return move();
@@ -34,7 +34,7 @@ public class Car {
     }
 
     private Car move() {
-        return new Car(this.carName, this.position.plus());
+        return new Car(this.carName, this.position.increment());
     }
 
     public Position maxPosition(Position maxPosition) {
@@ -49,11 +49,11 @@ public class Car {
     }
 
     public CarName getCarName() {
-        return carName;
+        return this.carName;
     }
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
     @Override
