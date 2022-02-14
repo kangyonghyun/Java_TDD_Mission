@@ -1,5 +1,8 @@
-package ladder.domain;
+package ladder.domain.generator;
 
+import ladder.domain.Ladder;
+import ladder.domain.generator.DefaultLadderCreator;
+import ladder.domain.generator.DefaultLineCreator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,5 +1,7 @@
-package ladder.domain;
+package ladder.domain.generator;
 
+import ladder.domain.Cross;
+import ladder.domain.Line;
 import ladder.domain.util.RandomGenerator;
 
 import java.util.ArrayList;

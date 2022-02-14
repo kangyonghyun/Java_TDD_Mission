@@ -1,7 +1,7 @@
 package ladder;
 
 import ladder.controller.LadderController;
-import ladder.domain.LadderCreator;
+import ladder.domain.generator.LadderCreator;
 
 public class LadderApp {
 

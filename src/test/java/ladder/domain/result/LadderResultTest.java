@@ -2,6 +2,9 @@ package ladder.domain.result;
 
 import ladder.AppConfig;
 import ladder.domain.*;
+import ladder.domain.generator.DefaultLadderCreator;
+import ladder.domain.generator.DefaultLineCreator;
+import ladder.domain.generator.LadderCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

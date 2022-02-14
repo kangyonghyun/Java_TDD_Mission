@@ -1,9 +1,9 @@
 package ladder;
 
-import ladder.domain.DefaultLadderCreator;
-import ladder.domain.DefaultLineCreator;
-import ladder.domain.LadderCreator;
-import ladder.domain.LineCreator;
+import ladder.domain.generator.DefaultLadderCreator;
+import ladder.domain.generator.DefaultLineCreator;
+import ladder.domain.generator.LadderCreator;
+import ladder.domain.generator.LineCreator;
 
 public class AppConfig {
 

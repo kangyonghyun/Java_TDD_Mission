@@ -1,5 +1,7 @@
 package ladder.domain;
 
+import ladder.domain.generator.DefaultLadderCreator;
+import ladder.domain.generator.DefaultLineCreator;
 import ladder.domain.result.LadderResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
