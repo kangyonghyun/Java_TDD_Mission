@@ -1,6 +1,7 @@
 package ladder.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Line {
 
@@ -15,12 +16,29 @@ public class Line {
     }
 
     public List<Cross> getCrosses() {
-        return crosses;
+        return this.crosses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Line line = (Line) o;
+        return Objects.equals(crosses, line.crosses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(crosses);
     }
 
     @Override
     public String toString() {
-        return "" + crosses;
+        return "Line= " + crosses;
     }
 
 }
