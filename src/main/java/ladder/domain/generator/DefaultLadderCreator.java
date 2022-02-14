@@ -15,14 +15,12 @@ public class DefaultLadderCreator implements LadderCreator {
     }
 
     @Override
-    public Ladder createLadder(int height, int width) {
+    public Ladder createLadder(int width, int height) {
         List<Line> lines = new ArrayList<>();
-
         for (int i = 0; i < height; i++) {
             Line line = this.lineCreator.createLine(width);
             lines.add(line);
         }
-
         return new Ladder(width, lines);
     }
 

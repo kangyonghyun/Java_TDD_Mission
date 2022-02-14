@@ -4,6 +4,6 @@ import ladder.domain.Ladder;
 
 public interface LadderCreator {
 
-    Ladder createLadder(int height, int width);
+    Ladder createLadder(int width, int height);
 
 }
