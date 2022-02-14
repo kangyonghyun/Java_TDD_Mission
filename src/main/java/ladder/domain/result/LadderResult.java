@@ -19,19 +19,19 @@ public class LadderResult {
         return this.result;
     }
 
-    public int getOneResult(int key) {
-        if (this.result.get(key) == null) {
-            throw new IllegalArgumentException(ERROR_NOT_KEY_MSG);
-        }
-        return this.result.get(key);
-    }
-
     public List<Integer> getAllResult() {
         List<Integer> all = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
             all.add(getOneResult(i));
         }
         return all;
+    }
+
+    public int getOneResult(int key) {
+        if (this.result.get(key) == null) {
+            throw new IllegalArgumentException(ERROR_NOT_KEY_MSG);
+        }
+        return this.result.get(key);
     }
 
 }
