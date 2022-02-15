@@ -1,5 +1,7 @@
 package ladder.domain;
 
+import java.util.Objects;
+
 public class Cross {
 
     private final int index;
@@ -21,9 +23,6 @@ public class Cross {
         if (point.move() == Direction.LEFT) {
             return this.index - 1;
         }
-        if (point.move() == Direction.SOUTH) {
-            return this.index;
-        }
         return this.index;
     }
 
@@ -31,6 +30,7 @@ public class Cross {
         return new Cross(this.index + 1, this.point.next());
     }
 
+    // 테스트용
     public Cross next(boolean right) {
         return new Cross(this.index + 1, this.point.next(right));
     }
@@ -56,8 +56,28 @@ public class Cross {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Cross cross = (Cross) o;
+        return index == cross.index && Objects.equals(point, cross.point);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, point);
+    }
+
+    @Override
     public String toString() {
-        return point + ", index=" + index;
+        return "Cross{" +
+                "index=" + index +
+                ", point=" + point +
+                '}';
     }
 
 }

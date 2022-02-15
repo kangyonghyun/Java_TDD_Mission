@@ -19,11 +19,13 @@ public class LadderController {
     }
 
     public void start() {
+        // 선수이름
         List<String> names = InputView.inputPlayerNames();
         Players players = new Players(names);
+        // 결과항목
         List<String> items = InputView.inputItems();
 
-        Ladder ladder = ladderCreator.createLadder(InputView.inputLadderHeight(), names.size());
+        Ladder ladder = ladderCreator.createLadder(names.size(), InputView.inputLadderHeight());
         LadderResult result = ladder.play();
 
         OutputView.printLadderView(names, ladder);

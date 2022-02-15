@@ -8,6 +8,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PointTest {
 
     @Test
+    void create() {
+        Point first = Point.first(true);
+        assertThat(first).isEqualTo(Point.first(true));
+        assertThat(first.next()).isEqualTo(first.next(false));
+    }
+
+    @Test
     void first() {
         Point first = Point.first(true);
         assertThat(first.move()).isEqualTo(Direction.RIGHT);
