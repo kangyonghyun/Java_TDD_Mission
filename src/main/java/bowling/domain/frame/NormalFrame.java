@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    public static final int UNSCORE_VALUE = -1;
+    public static final int NOT_SCORE_VALUE = -1;
     private final int no;
     private State state;
     private Frame next;
@@ -30,7 +30,7 @@ public class NormalFrame implements Frame {
         this.state = this.state.bowl(downOfPins);
         if (this.state.isFinal()) {
             this.next = createNext();
-            return next;
+            return this.next;
         }
         return this;
     }
@@ -47,21 +47,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getNo() {
-        return this.no;
-    }
-
-    @Override
     public Score getScore() {
         Score score = this.state.getScore();
         if (score.canCalculateScore()) {
             return score;
         }
         return this.next.calculateExtraScore(score);
-    }
-
-    public State getState() {
-        return this.state;
     }
 
     @Override
@@ -76,19 +67,19 @@ public class NormalFrame implements Frame {
     @Override
     public void addFrameResult(Board board) {
         board.add(getFrameResult());
-        if (next != null) {
-            next.addFrameResult(board);
+        if (this.next != null) {
+            this.next.addFrameResult(board);
         }
     }
 
     private FrameResult getFrameResult() {
         if (!this.state.isFinal()) {
-            return new FrameResult(UNSCORE_VALUE);
+            return new FrameResult(NOT_SCORE_VALUE);
         }
         try {
             return new FrameResult(getScore().getScore());
         } catch (CannotCalculateException e) {
-            return new FrameResult(UNSCORE_VALUE);
+            return new FrameResult(NOT_SCORE_VALUE);
         }
     }
 
@@ -97,6 +88,19 @@ public class NormalFrame implements Frame {
         Board board = new Board();
         addFrameResult(board);
         return board;
+    }
+
+    @Override
+    public int getNo() {
+        return this.no;
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    public Frame getNext() {
+        return this.next;
     }
 
     @Override
