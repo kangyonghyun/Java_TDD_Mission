@@ -30,15 +30,16 @@ class ScoreTest {
     @Test
     @DisplayName("정적 메소드 테스트")
     void miss() {
-        assertThat(Score.miss(8)).isEqualTo(new Score(8, 0));
-        assertThat(Score.strike()).isEqualTo(new Score(10, 2));
-        assertThat(Score.spare()).isEqualTo(new Score(10, 1));
+        assertThat(miss).isEqualTo(new Score(8, 0));
+        assertThat(strike).isEqualTo(new Score(10, 2));
+        assertThat(spare).isEqualTo(new Score(10, 1));
     }
 
     @Test
     @DisplayName("left == 0 -> true")
     void canCalculateScore() {
         assertThat(strike.canCalculateScore()).isFalse();
+        assertThat(spare.canCalculateScore()).isFalse();
         assertThat(miss.canCalculateScore()).isTrue();
     }
 
@@ -50,17 +51,24 @@ class ScoreTest {
     }
 
     @Test
+    @DisplayName("miss(left=0) 스코어에서 bowl() -> IllegalArgumentException 반환")
+    void not_bowl() {
+        assertThatThrownBy(() -> miss.bowl(5))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("left==0 인 score 객체만 스코어 반환")
     void getScore() {
-        assertThat(miss.getScore()).isEqualTo(8);
+        assertThat(miss.getTotalScore()).isEqualTo(8);
     }
 
     @Test
     @DisplayName("left!=0 인 score 객체가 getScore() 호출 -> CannotCalculateException 반환")
     void invalid_getScore() {
-        assertThatThrownBy(() -> strike.getScore())
+        assertThatThrownBy(() -> strike.getTotalScore())
                 .isInstanceOf(CannotCalculateException.class);
-        assertThatThrownBy(() -> spare.getScore())
+        assertThatThrownBy(() -> spare.getTotalScore())
                 .isInstanceOf(CannotCalculateException.class);
     }
 

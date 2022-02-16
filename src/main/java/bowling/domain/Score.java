@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Score {
 
-    public static final int MIN_LEFT = 0;
+    public static final int ZERO_LEFT = 0;
     public static final int ONE_LEFT = 1;
     public static final int TWO_LEFT = 2;
 
@@ -16,11 +16,14 @@ public class Score {
 
     public Score(int total, int left) {
         this.total = total;
+        if (left < 0) {
+            throw new IllegalArgumentException("마이너스 left");
+        }
         this.left = left;
     }
 
     public static Score miss(int total) {
-        return new Score(total, MIN_LEFT);
+        return new Score(total, ZERO_LEFT);
     }
 
     public static Score spare() {
@@ -31,22 +34,20 @@ public class Score {
         return new Score(Pins.MAX_PINS, TWO_LEFT);
     }
 
-    public boolean canCalculateScore() {
-        return this.left == MIN_LEFT;
-    }
-
     public Score bowl(int downOfPins) {
         return new Score(this.total + downOfPins, this.left - 1);
     }
 
-    // TODO 테스트
-    public int getScore() {
+    public int getTotalScore() {
         if (!canCalculateScore()) {
             throw new CannotCalculateException();
         }
         return this.total;
     }
 
+    public boolean canCalculateScore() {
+        return this.left == ZERO_LEFT;
+    }
 
     @Override
     public boolean equals(Object o) {
