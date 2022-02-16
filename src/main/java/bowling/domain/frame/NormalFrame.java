@@ -47,7 +47,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score getScore() {
+    public Score calculateScore() {
         Score score = this.state.getScore();
         if (score.canCalculateScore()) {
             return score;
@@ -77,7 +77,7 @@ public class NormalFrame implements Frame {
             return new FrameResult(NOT_SCORE_VALUE);
         }
         try {
-            return new FrameResult(getScore().getScore());
+            return new FrameResult(calculateScore().getTotalScore());
         } catch (CannotCalculateException e) {
             return new FrameResult(NOT_SCORE_VALUE);
         }

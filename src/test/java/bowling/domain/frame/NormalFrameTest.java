@@ -6,6 +6,7 @@ import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 import bowling.domain.state.Strike;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,6 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
+    NormalFrame current;
+
+    @BeforeEach
+    void setUp() {
+        current = new NormalFrame(1);
+    }
+
     @Test
     @DisplayName("NormalFrame 객체 생성")
     void create() {
@@ -32,8 +40,6 @@ class NormalFrameTest {
     @Test
     @DisplayName("첫 투구가 스트라이크 아닐 경우 : ready -> FirstBowl")
     void bowl_9_this_frame() {
-        NormalFrame current = new NormalFrame(1);
-
         // 같은 NormalFrame 객체 반환
         Frame next = current.bowl(9);
 
@@ -47,8 +53,6 @@ class NormalFrameTest {
     @ValueSource(ints = {1, 2})
     @DisplayName("첫 투구가 스트라이크 아닐 경우 : ready -> FirstBowl -> (Miss, Spare)")
     void bowl_8_1_this_frame(int second) {
-        NormalFrame current = new NormalFrame(1);
-
         //MISS or SPARE
         Frame next = current
                 .bowl(8)
@@ -63,8 +67,6 @@ class NormalFrameTest {
     @Test
     @DisplayName("첫 투구가 스트라이크일 경우 : ready -> FirstBowl -> Strike")
     void bowl_strike_next_frame() {
-        NormalFrame current = new NormalFrame(1);
-
         // STRIKE
         Frame next = current.bowl(10);
 
@@ -78,7 +80,7 @@ class NormalFrameTest {
     @MethodSource("providedFrame")
     @DisplayName("점수 계산 못하는 경우 :Ready, FirstBowl, Spare, Strike")
     void x_getScore(Frame frame) {
-        assertThatThrownBy(frame::getScore)
+        assertThatThrownBy(frame::calculateScore)
                 .isInstanceOf(CannotCalculateException.class);
     }
 
@@ -103,86 +105,76 @@ class NormalFrameTest {
     @Test
     @DisplayName("Miss 점수")
     void miss_getScore() {
-        Frame current = new NormalFrame(1);
         current.bowl(7).bowl(2);
-        assertThat(current.getScore()).isEqualTo(Score.miss(9));
+        assertThat(current.calculateScore()).isEqualTo(Score.miss(9));
     }
 
     @Test
     @DisplayName("Spare - miss 점수")
     void spare_miss_getScore() {
-        Frame current = new NormalFrame(1);
         current.bowl(7).bowl(3)
                 .bowl(7).bowl(2);
-        assertThat(current.getScore()).isEqualTo(new Score(17, 0));
+        assertThat(current.calculateScore()).isEqualTo(new Score(17, 0));
     }
 
     @Test
     @DisplayName("Spare - Spare 점수")
     void spare_spare_getScore() {
-        Frame current = new NormalFrame(1);
         current.bowl(7).bowl(3)
                 .bowl(7).bowl(3);
-        assertThat(current.getScore()).isEqualTo(new Score(17, 0));
+        assertThat(current.calculateScore()).isEqualTo(new Score(17, 0));
     }
 
     @Test
     @DisplayName("Strike - miss 점수")
     void strike_miss_getScore() {
-        Frame current = new NormalFrame(1);
         current.bowl(10)
                 .bowl(7).bowl(2);
-        assertThat(current.getScore()).isEqualTo(new Score(19, 0));
+        assertThat(current.calculateScore()).isEqualTo(new Score(19, 0));
     }
 
     @Test
     @DisplayName("Strike - Strike -Strike 점수")
     void strike_strike_strike_getScore() {
-        Frame current = new NormalFrame(1);
         current.bowl(10)
                 .bowl(10)
                 .bowl(10);
-        assertThat(current.getScore()).isEqualTo(new Score(30, 0));
+        assertThat(current.calculateScore()).isEqualTo(new Score(30, 0));
     }
 
-//    @Test
-//    @DisplayName("현재상태(spare) : before - strike")
-//    void strike_calculateExtraScore() {
-//        Frame now = new NormalFrame(1);
-//        now.bowl(8).bowl(2);
-//        assertThat(now.calculateExtraScore(Score.strike())).isEqualTo(new Score(20, 0));
-//    }
-//
-//    @Test
-//    @DisplayName("현재상태(spare) : before - spare")
-//    void spare_calculateExtraScore() {
-//        Frame now = new NormalFrame(1);
-//        now.bowl(8).bowl(2); // 현재상태 (spare)
-//        assertThat(now.calculateExtraScore(Score.spare())).isEqualTo(new Score(18, 0));
-//    }
-//
-//    // 현재상태(strike, miss)
-//    @Test
-//    @DisplayName("현재상태(strike) : before - spare")
-//    void spare_strike_calculateExtraScore() {
-//        Frame now = new NormalFrame(1);
-//        now.bowl(10);
-//        assertThat(now.calculateExtraScore(Score.spare())).isEqualTo(new Score(20, 0));
-//    }
-//
-//    @Test
-//    @DisplayName("현재상태(strike) : before - strike")
-//    void strike_strike_calculateExtraScore() {
-//        Frame now = new NormalFrame(1);
-//        now.bowl(10)
-//        .bowl(10);
-//        assertThat(now.calculateExtraScore(Score.strike())).isEqualTo(new Score(30, 0));
-//    }
+    @Test
+    @DisplayName("현재상태(spare) : before - strike")
+    void strike_calculateExtraScore() {
+        current.bowl(8).bowl(2);
+        assertThat(current.calculateExtraScore(Score.strike())).isEqualTo(new Score(20, 0));
+    }
+
+    @Test
+    @DisplayName("현재상태(spare) : before - spare")
+    void spare_calculateExtraScore() {
+        current.bowl(8).bowl(2); // 현재상태 (spare)
+        assertThat(current.calculateExtraScore(Score.spare())).isEqualTo(new Score(18, 0));
+    }
+
+    // 현재상태(strike, miss)
+    @Test
+    @DisplayName("현재상태(strike) : before - spare")
+    void spare_strike_calculateExtraScore() {
+        current.bowl(10);
+        assertThat(current.calculateExtraScore(Score.spare())).isEqualTo(new Score(20, 0));
+    }
+
+    @Test
+    @DisplayName("현재상태(strike) : before - strike")
+    void strike_strike_calculateExtraScore() {
+        current.bowl(10)
+        .bowl(10);
+        assertThat(current.calculateExtraScore(Score.strike())).isEqualTo(new Score(30, 0));
+    }
 
     @Test
     @DisplayName("보드 생성 후 FrameResult 값 저장")
     void addFrameResult() {
-        NormalFrame current = new NormalFrame(1);
         current.bowl(7).bowl(3)    //result - 17
                 .bowl(7).bowl(1)              //result - 25
                 .bowl(10)                     //result - 44
