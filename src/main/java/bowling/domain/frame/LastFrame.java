@@ -17,7 +17,7 @@ public class LastFrame implements Frame {
     private final LinkedList<State> states = new LinkedList<>();
 
     public LastFrame() {
-        states.add(StateFactory.ready());
+        this.states.add(StateFactory.ready());
     }
 
     @Override
@@ -27,7 +27,6 @@ public class LastFrame implements Frame {
         }
 
         State currentState = this.states.getLast();
-
         if (currentState.isFinal()) {
             this.states.add(StateFactory.firstBowl(downOfPins));
             return this;
@@ -48,17 +47,12 @@ public class LastFrame implements Frame {
     }
 
     private boolean isFinished() {
-        Score score = getScore();
+        Score score = calculateScore();
         return score.canCalculateScore();
     }
 
     @Override
-    public int getNo() {
-        return MAX_FRAME;
-    }
-
-    @Override
-    public Score getScore() {
+    public Score calculateScore() {
         Score score = getFirstScore();
         for (int i = 1; i < this.states.size(); i++) {
             State state = this.states.get(i);
@@ -73,7 +67,7 @@ public class LastFrame implements Frame {
 
     @Override
     public Score calculateExtraScore(Score beforeScore) {
-        for (State state : states) {
+        for (State state : this.states) {
             beforeScore = state.calculateExtraScore(beforeScore);
         }
         return beforeScore;
@@ -86,18 +80,23 @@ public class LastFrame implements Frame {
 
     private FrameResult getFrameResult() {
         if (!isFinished()) {
-            return new FrameResult(NormalFrame.UNSCORE_VALUE);
+            return new FrameResult(NormalFrame.NOT_SCORE_VALUE);
         }
         try {
-            return new FrameResult(getScore().getScore());
+            return new FrameResult(calculateScore().getTotalScore());
         } catch (CannotCalculateException e) {
-            return new FrameResult(NormalFrame.UNSCORE_VALUE);
+            return new FrameResult(NormalFrame.NOT_SCORE_VALUE);
         }
     }
 
     @Override
     public Board createBoard() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getNo() {
+        return MAX_FRAME;
     }
 
     public LinkedList<State> getStates() {
