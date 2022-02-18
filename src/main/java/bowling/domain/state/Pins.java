@@ -8,6 +8,7 @@ public class Pins {
 
     public static final int MAX_PINS = 10;
     public static final String ERROR_RANGE_OF_PINS_MSG = "볼링핀의 개수는 0~10 까지 입니다.";
+    public static final int MIN_PINS = 0;
 
     private final int downOfPins;
 
@@ -35,7 +36,7 @@ public class Pins {
     }
 
     private void checkDownOfPins(int downOfPins) {
-        if (downOfPins > 10 || downOfPins < 0) {
+        if (downOfPins > MAX_PINS || downOfPins < MIN_PINS) {
             throw new IllegalArgumentException(ERROR_RANGE_OF_PINS_MSG);
         }
     }
