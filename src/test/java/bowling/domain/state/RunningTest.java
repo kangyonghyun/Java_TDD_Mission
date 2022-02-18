@@ -15,17 +15,17 @@ class RunningTest {
 
     @ParameterizedTest
     @MethodSource("providedStateForRunning")
-    @DisplayName("Running 상태는 isFinal -> false")
-    void isFinal(State actual) {
-        assertThat(actual.isFinal()).isFalse();
-    }
-
-    @ParameterizedTest
-    @MethodSource("providedStateForRunning")
     @DisplayName("Running 상태는 getScore() -> CannotCalculateException 반환")
     void getScore(State actual) {
         assertThatThrownBy(actual::getScore)
                 .isInstanceOf(CannotCalculateException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("providedStateForRunning")
+    @DisplayName("Running 상태는 isFinal -> false")
+    void isFinal(State actual) {
+        assertThat(actual.isFinal()).isFalse();
     }
 
     private static Stream<Arguments> providedStateForRunning() {

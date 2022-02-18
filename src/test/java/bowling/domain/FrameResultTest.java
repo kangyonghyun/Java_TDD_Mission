@@ -15,16 +15,15 @@ class FrameResultTest {
     @Test
     void addTotalScore() {
         FrameResult frameResult = new FrameResult(9);
-        int total = frameResult.addTotalScore(8);
-        assertThat(total).isEqualTo(17);
+        assertThat(frameResult.addFrameScore(8)).isEqualTo(17);
         assertThat(frameResult.getTotalScore()).isEqualTo(17);
     }
 
     @Test
     void addTotalScore_isUnScore() {
         FrameResult frameResult = new FrameResult(-1);
-        int total = frameResult.addTotalScore(9);
-        assertThat(total).isEqualTo(-1);
+        assertThat(frameResult.addFrameScore(9)).isEqualTo(-1);
+        assertThat(frameResult.getTotalScore()).isEqualTo(-1);
     }
 
 }
