@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class Score {
 
-    public static final int ZERO_LEFT = 0;
-    public static final int ONE_LEFT = 1;
-    public static final int TWO_LEFT = 2;
+    private static final int ZERO_LEFT = 0;
+    private static final int ONE_LEFT = 1;
+    private static final int TWO_LEFT = 2;
 
     private final int total;
     private final int left;
@@ -38,6 +38,10 @@ public class Score {
         return new Score(this.total + downOfPins, this.left - 1);
     }
 
+    public boolean canCalculateScore() {
+        return this.left == ZERO_LEFT;
+    }
+
     public int getTotalScore() {
         if (!canCalculateScore()) {
             throw new CannotCalculateException();
@@ -45,8 +49,12 @@ public class Score {
         return this.total;
     }
 
-    public boolean canCalculateScore() {
-        return this.left == ZERO_LEFT;
+    public int getTotal() {
+        return this.total;
+    }
+
+    public int getLeft() {
+        return this.left;
     }
 
     @Override

@@ -9,12 +9,12 @@ public interface Frame {
 
     int getNo();
 
-    Score getScore();
+    Score calculateScore();
 
     Score calculateExtraScore(Score beforeScore);
 
-    void addFrameResult(Board board);
-
     Board createBoard();
+
+    void addFrameResult(Board board);
 
 }

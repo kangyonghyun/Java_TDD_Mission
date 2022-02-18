@@ -30,10 +30,8 @@ public class Spare extends Finished {
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
-        beforeScore = this.secondPins.sumScore(beforeScore);
-        return beforeScore;
+        return this.secondPins.sumScore(beforeScore);
     }
-
 
     @Override
     public boolean equals(Object o) {

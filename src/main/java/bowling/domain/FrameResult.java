@@ -11,13 +11,11 @@ public class FrameResult {
         this.score = score;
     }
 
-    public int addTotalScore(int beforeScore) {
+    public int addFrameScore(int beforeScore) {
         if (isUnScore()) {
-            this.totalScore = this.score;
-            return this.totalScore;
+            return this.totalScore = this.score;
         }
-        this.totalScore = this.score + beforeScore;
-        return this.totalScore;
+        return this.totalScore = this.score + beforeScore;
     }
 
     public boolean isUnScore() {

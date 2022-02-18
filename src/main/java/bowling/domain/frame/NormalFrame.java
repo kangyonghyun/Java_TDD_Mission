@@ -65,6 +65,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Board createBoard() {
+        Board board = new Board();
+        addFrameResult(board);
+        return board;
+    }
+
+    @Override
     public void addFrameResult(Board board) {
         board.add(getFrameResult());
         if (this.next != null) {
@@ -81,13 +88,6 @@ public class NormalFrame implements Frame {
         } catch (CannotCalculateException e) {
             return new FrameResult(NOT_SCORE_VALUE);
         }
-    }
-
-    @Override
-    public Board createBoard() {
-        Board board = new Board();
-        addFrameResult(board);
-        return board;
     }
 
     @Override
