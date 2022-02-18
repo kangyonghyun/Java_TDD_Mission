@@ -186,5 +186,4 @@ class NormalFrameTest {
         assertThat(board.getGameScore()).isEqualTo(53);
     }
 
-
 }

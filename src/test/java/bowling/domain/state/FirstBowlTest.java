@@ -47,8 +47,6 @@ class FirstBowlTest {
     void invalid_calculateExtraScore() {
         assertThatThrownBy(() -> firstBowl.calculateExtraScore(Score.strike()))
                 .isInstanceOf(CannotCalculateException.class);
-        assertThatThrownBy(() -> firstBowl.calculateExtraScore(Score.miss(8)))
-                .isInstanceOf(CannotCalculateException.class);
     }
 
 }

@@ -47,5 +47,4 @@ class MissTest {
         assertThat(score).isEqualTo(new Score(19 , 0));
     }
 
-
 }

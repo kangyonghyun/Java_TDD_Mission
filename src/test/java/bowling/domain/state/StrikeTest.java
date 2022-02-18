@@ -25,14 +25,14 @@ class StrikeTest {
     @DisplayName("Strike 상태에서 스페어 추가 점수 구하기")
     void calculateExtraScore() {
         Score score = strike.calculateExtraScore(Score.spare());
-        assertThat(score).isEqualTo(new Score(20, 0));
+        assertThat(score.getTotal()).isEqualTo(20);
     }
 
     @Test
     @DisplayName("Strike 상태에서 스트라이크 추가 점수 구하기")
     void calculateExtraScore1() {
         Score score = strike.calculateExtraScore(Score.strike());
-        assertThat(score).isEqualTo(new Score(20, 1));
+        assertThat(score.getTotal()).isEqualTo(20);
     }
 
 }
